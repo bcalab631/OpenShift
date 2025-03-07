@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      serviceAccountName: myapp-sa
+      containers:
+      - name: myapp
+        image: myapp-image:latest
+        env:
+        - name: USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: myapp-secrets
+              key: username
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: myapp-secrets
+              key: password
