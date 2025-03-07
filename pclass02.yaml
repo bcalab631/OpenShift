@@ -12,10 +12,9 @@ spec:
         objectType: "kv"
         objectVersion: "latest"
         objectKey: "username"
-        secretKeyRef: "username"  # This defines the key name inside the pod's environment
+        secretKeyRef: "username"  # This will create the environment variable 'username'
       - objectName: "secret/data/myapp/config"
         objectType: "kv"
         objectVersion: "latest"
         objectKey: "password"
-        secretKeyRef: "password"
-
+        secretKeyRef: "password"  # This will create the environment variable 'password'
