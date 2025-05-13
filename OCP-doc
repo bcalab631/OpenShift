@@ -1,0 +1,9 @@
+Kubernetes authentication in Vault enables secure, identity-based access to secrets for applications running within a Kubernetes cluster. Instead of hardcoding credentials, applications authenticate to Vault using their Kubernetes service account tokens, gaining tightly scoped and auditable access to sensitive data.
+
+Vault Setup: Vault is configured to trust the Kubernetes cluster (API server & CA certs).
+
+Role Mapping: Specific Kubernetes service accounts are mapped to Vault roles and policies.
+
+App Authentication: Applications use their Kubernetes service account token to authenticate to Vault.
+
+Secret Access: Vault verifies the token and grants access to secrets based on the mapped policy.
