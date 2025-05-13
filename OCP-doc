@@ -7,3 +7,28 @@ Role Mapping: Specific Kubernetes service accounts are mapped to Vault roles and
 App Authentication: Applications use their Kubernetes service account token to authenticate to Vault.
 
 Secret Access: Vault verifies the token and grants access to secrets based on the mapped policy.
+
+#######################################################################################################
+Integrating HashiCorp Vault with OpenShift requires specific configurations on the OpenShift side to ensure secure, reliable authentication and secret access from applications running in the cluster.
+
+This summary outlines the key setup steps, permissions, and best practices required on OpenShift to support Vault's Kubernetes authentication method.
+
+1. Service Account Creation
+Each application that needs to access Vault should run under a dedicated OpenShift service account.
+
+2. RBAC: Allow TokenReview Permissions
+Vault needs permission to validate service account tokens via the Kubernetes TokenReview API.
+Create a ClusterRoleBinding for the Vault service account (used by Vault if running inside OpenShift):
+
+3. Security Context Constraints (SCC)
+If using Vault Agent or CSI Provider, the pod may require specific SCCs depending on the method:
+
+Vault Agent Sidecar often requires anyuid or privileged SCC.
+
+Vault CSI Provider might require a custom SCC allowing necessary volume mounts or file access.
+
+4. Deploy Applications with the Service Account
+Ensure applications use the service account linked to a Vault role.
+
+5. (Optional) Vault Agent Injector Setup
+If using Vault Agent sidecar injection, annotate deployments to enable auto-auth and secret templating:
