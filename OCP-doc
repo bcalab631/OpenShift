@@ -8,6 +8,30 @@ App Authentication: Applications use their Kubernetes service account token to a
 
 Secret Access: Vault verifies the token and grants access to secrets based on the mapped policy.
 
+Endpoint: auth/kubernetes/config is the configuration path for setting up Kubernetes-specific auth settings.
+Vault uses this JWT to call the Kubernetes TokenReview API to validate incoming service account tokens during auth.
+Specifies the Kubernetes (or OpenShift) API server URL that Vault will connect to for verifying tokens.
+Ensures secure communication by validating the Kubernetes API server’s SSL certificate.
+This vault write command configures Vault to authenticate with a Kubernetes (or OpenShift) cluster by:
+
+Supplying a service account JWT for token validation,
+
+Specifying the Kubernetes API server address,
+
+Providing the CA certificate to securely connect to the API server.
+
+vault write auth/kubernetes/role/example-role \
+ This role defines how Kubernetes service accounts can authenticate to Vault and what they’re allowed to do.
+ bound_service_account_names=example-sa \
+Limits which service accounts can assume this Vault role.
+bound_service_account_namespaces=example-namespace \
+Adds another layer of restriction, ensuring the role is used only within specific namespaces.
+policies=example-policy \
+Defines what the authenticated entity can access within Vault.
+ttl=1h
+Token will expire in 1 hour unless renewed.
+This command defines a Vault Kubernetes auth role, binding it to a specific service account and namespace. It assigns Vault policies and token lifetime, controlling who can authenticate from Kubernetes and what they can access in Vault.
+
 #######################################################################################################
 Integrating HashiCorp Vault with OpenShift requires specific configurations on the OpenShift side to ensure secure, reliable authentication and secret access from applications running in the cluster.
 
