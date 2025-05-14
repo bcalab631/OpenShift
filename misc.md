@@ -15,3 +15,6 @@ Prepare OpenShift environment for integration.
 Coordinate with security and platform teams for validation.
 
 Develop runbooks and operational documentation.
+
+Pre-Implementation Activities for OpenShift Secret Management Integration
+ Pre-Implementation Efforts for Vault Injector Integration in OpenShift
