@@ -72,3 +72,17 @@ Ensure applications use the service account linked to a Vault role.
 
 5. (Optional) Vault Agent Injector Setup
 If using Vault Agent sidecar injection, annotate deployments to enable auto-auth and secret templating:
+
+Vault Agent Injector is a component of HashiCorp Vault used to automatically inject secrets into containers running in Kubernetes (or OpenShift). In OpenShift, deploying the Vault Agent Injector involves integrating Vault with the platform and using Kubernetes Admission Webhooks to inject Vault Agent sidecars into pods.
+Deploy using Helm or YAML.
+
+It creates a MutatingWebhookConfiguration to inject sidecars.
+
+Configure the injector with the proper Vault address and TLS settings.
+
+metadata:
+  annotations:
+    vault.hashicorp.com/agent-inject: "true"
+    vault.hashicorp.com/role: "demo"
+    vault.hashicorp.com/agent-inject-secret-mysecret: "secret/data/myapp/config"
+
