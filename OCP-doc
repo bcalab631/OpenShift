@@ -7,7 +7,23 @@ Role Mapping: Specific Kubernetes service accounts are mapped to Vault roles and
 App Authentication: Applications use their Kubernetes service account token to authenticate to Vault.
 
 Secret Access: Vault verifies the token and grants access to secrets based on the mapped policy.
+##########################################################################
+App Pod (my-app-sa) --> Vault Kubernetes Auth (/auth/kubernetes/login)
+          |
+          | (JWT Token)
+          v
+Vault:
+  - Validates token
+  - Matches role
+  - Applies policy
+          |
+          v
+App receives Vault token
+  |
+  v
+Uses it to read secrets
 
+#########################################################################
 Endpoint: auth/kubernetes/config is the configuration path for setting up Kubernetes-specific auth settings.
 Vault uses this JWT to call the Kubernetes TokenReview API to validate incoming service account tokens during auth.
 Specifies the Kubernetes (or OpenShift) API server URL that Vault will connect to for verifying tokens.
